@@ -1,3 +1,4 @@
+import MyPrelude
 import Test.Hspec
 
 main :: IO ()

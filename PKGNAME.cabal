@@ -81,6 +81,7 @@ library
     , mtl
     , lens
     , rio
+    , transformers
   exposed-modules:
     MyPrelude
 

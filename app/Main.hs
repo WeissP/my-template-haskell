@@ -1,4 +1,4 @@
-import Lib
+import MyPrelude
 
 main :: IO ()
-main = putStrLn "heyyyyyy"
+main = runSimpleApp $ logInfo "Hello World!"
