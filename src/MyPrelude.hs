@@ -1,21 +1,20 @@
 {-# OPTIONS_GHC -Wno-orphans #-}
 
 module MyPrelude (
-  module X,
-  module Data.Default,
-  module RIO,
-  module Control.Monad.Except,
-  maybeToEither,
-  wrapShow,
-  logException,
-  firstJustsM,
-  displayWithSep,
-  wrapDisplay,
-  listDisplay,
-  getOrDft,
-  replace,
-  getEnv,
-  hoistMaybe,
+    module X,
+    module Data.Default,
+    module RIO,
+    module Control.Monad.Except,
+    maybeToEither,
+    wrapShow,
+    logException,
+    firstJustsM,
+    displayWithSep,
+    wrapDisplay,
+    listDisplay,
+    getOrDft,
+    replace,
+    getEnv,
 ) where
 
 import Control.Lens as X
@@ -29,20 +28,17 @@ import RIO.NonEmpty qualified as NE
 import System.Environment qualified as S
 
 class ItemsDisplay f where
-  displayWithSep :: (Display a) => Builder -> f a -> Utf8Builder
-  listDisplay :: (Display a) => f a -> Utf8Builder
-  listDisplay items = wrapDisplay "[" (displayWithSep ", " items) "]"
+    displayWithSep :: (Display a) => Builder -> f a -> Utf8Builder
+    listDisplay :: (Display a) => f a -> Utf8Builder
+    listDisplay items = wrapDisplay "[" (displayWithSep ", " items) "]"
 
 instance ItemsDisplay NonEmpty where
-  displayWithSep sep items =
-    Utf8Builder
-      $ sconcat
-      $ NE.intersperse sep (items <&> getUtf8Builder . display)
+    displayWithSep sep items =
+        Utf8Builder
+            $ sconcat
+            $ NE.intersperse sep (items <&> getUtf8Builder . display)
 
 instance Display String where display = fromString
-
-hoistMaybe :: (Applicative m) => Maybe b -> MaybeT m b
-hoistMaybe = MaybeT . pure
 
 maybeToEither :: a -> Maybe b -> Either a b
 maybeToEither _ (Just b) = Right b
@@ -55,14 +51,14 @@ wrapDisplay :: (Display a) => Builder -> a -> Builder -> Utf8Builder
 wrapDisplay l a r = Utf8Builder $ l <> getUtf8Builder (display a) <> r
 
 logException ::
-  ( MonadIO m
-  , MonadReader env m
-  , HasLogFunc env
-  , HasCallStack
-  , Exception e
-  ) =>
-  e
-  -> m ()
+    ( MonadIO m
+    , MonadReader env m
+    , HasLogFunc env
+    , HasCallStack
+    , Exception e
+    ) =>
+    e ->
+    m ()
 logException = logWarn . ("Catched Exception: " <>) . fromString . displayException
 
 {- | Takes computations returnings @Maybes@; tries each one in order.

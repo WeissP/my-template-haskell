@@ -1,4 +1,4 @@
-cabal-version:   3.10
+cabal-version:   3.8
 name:            PKGNAME
 version:         0
 license:         BSD-3-Clause
@@ -107,7 +107,7 @@ test-suite PKGNAME-test
   import:         common-options
   type:           exitcode-stdio-1.0
   hs-source-dirs: test
-  main-is:        Spec.hs
+  main-is:        Main.hs
   build-depends:
     , genvalidity
     , genvalidity-sydtest

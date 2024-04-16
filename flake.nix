@@ -23,7 +23,7 @@
             # This overlay adds our project to pkgs
             PKGNAME = final.haskell-nix.project' {
               src = ./.;
-              compiler-nix-name = "ghc982";
+              compiler-nix-name = "ghc964";
             };
           })
           devshell.overlays.default
