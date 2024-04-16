@@ -1,4 +1,4 @@
-cabal-version:   2.4
+cabal-version:   3.10
 name:            PKGNAME
 version:         0
 license:         BSD-3-Clause
@@ -26,8 +26,11 @@ common common-options
   default-extensions:
     ApplicativeDo
     BangPatterns
+    BlockArguments
     ConstraintKinds
     DataKinds
+    DefaultSignatures
+    DeriveAnyClass
     DeriveDataTypeable
     DeriveFoldable
     DeriveFunctor
@@ -36,6 +39,8 @@ common common-options
     DeriveTraversable
     DerivingStrategies
     DerivingVia
+    DisambiguateRecordFields
+    DuplicateRecordFields
     EmptyCase
     EmptyDataDecls
     EmptyDataDeriving
@@ -43,11 +48,13 @@ common common-options
     ExplicitForAll
     FlexibleContexts
     FlexibleInstances
+    FunctionalDependencies
     GADTSyntax
     GeneralisedNewtypeDeriving
     ImportQualifiedPost
     KindSignatures
     LambdaCase
+    MonadComprehensions
     MultiParamTypeClasses
     MultiWayIf
     NoImplicitPrelude
@@ -68,6 +75,7 @@ common common-options
     TypeFamilies
     TypeOperators
     ViewPatterns
+
   ghc-options:
     -Wall -Wcompat -Widentities -Wincomplete-uni-patterns
     -Wincomplete-record-updates -Wredundant-constraints
@@ -79,6 +87,9 @@ library
   build-depends:
     , containers
     , mtl
+    , data-default
+    , validity
+    , validity-text
     , lens
     , rio
     , transformers
@@ -98,11 +109,12 @@ test-suite PKGNAME-test
   hs-source-dirs: test
   main-is:        Spec.hs
   build-depends:
-    , hspec
-    , HUnit
+    , genvalidity
+    , genvalidity-sydtest
+    , rio
     , PKGNAME
-    , QuickCheck
-
+    , sydtest
+  build-tool-depends: sydtest-discover:sydtest-discover >=0.0.0.3
   ghc-options:    -threaded -rtsopts -with-rtsopts=-N
 
 benchmark PKGNAME-bench
